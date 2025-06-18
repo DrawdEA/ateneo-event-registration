@@ -1,0 +1,62 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+// prisma/schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model Organization {
+  id        String   @id @default(cuid())
+  name      String
+  users     User[]
+  events    Event[]
+  createdAt DateTime @default(now()) @map("created_at")
+
+  @@map("organizations")
+}
+
+model User {
+  id             String        @id @default(cuid())
+  email          String        @unique
+  name           String
+  password       String        // Hashed password
+  organizationId String        @map("organization_id")
+  organization   Organization  @relation(fields: [organizationId], references: [id])
+  createdAt      DateTime      @default(now()) @map("created_at")
+
+  @@map("users")
+}
+
+model Event {
+  id             String     @id @default(cuid())
+  name           String
+  description    String?
+  date           DateTime
+  location       String?
+  organizationId String     @map("organization_id")
+  organization   Organization @relation(fields: [organizationId], references: [id])
+  attendees      Attendee[]
+  createdAt      DateTime   @default(now()) @map("created_at")
+
+  @@map("events")
+}
+
+model Attendee {
+  id        String   @id @default(cuid())
+  studentId String   @map("student_id")
+  eventId   String   @map("event_id")
+  event     Event    @relation(fields: [eventId], references: [id])
+  scannedAt DateTime @default(now()) @map("scanned_at")
+
+  @@map("attendees")
+  @@unique([studentId, eventId])
+}
