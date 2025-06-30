@@ -38,6 +38,10 @@ export function EventCreateForm() {
         Description
         <textarea name="description" className="input input-bordered mt-1" placeholder="Event Description" />
       </label>
+      <label className="flex flex-col">
+        Google Sheet URL
+        <input type="url" name="googleSheetUrl" className="input input-bordered mt-1" placeholder="https://docs.google.com/spreadsheets/d/..." />
+      </label>
       <button type="submit" className="btn btn-primary md:col-span-2 mt-2" disabled={isPending}>
         {isPending ? "Creating..." : "Create Event"}
       </button>

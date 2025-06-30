@@ -5,6 +5,7 @@ import React from "react";
 import { redirect } from "next/navigation";
 import { EventEditModal } from "@/components/event-edit-modal";
 import { EventDeleteButton } from "@/components/event-delete-button";
+import { EventShareLink } from "@/components/event-share-link";
 
 interface EventPageProps {
   params: { id: string };
@@ -59,6 +60,29 @@ export default async function EventPage({ params }: EventPageProps) {
       </div>
       <div className="text-sm text-gray-400 mb-6">
         <strong>Event ID:</strong> {event.id}
+      </div>
+      {event.excelPath && (
+        <div className="mb-4">
+          <strong>Google Sheet:</strong>{' '}
+          <a
+            href={`https://docs.google.com/spreadsheets/d/${event.excelPath}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-blue-500 underline"
+          >
+            View Sheet
+          </a>
+          <span className="ml-2 text-xs text-gray-400">(ID: {event.excelPath})</span>
+        </div>
+      )}
+      <div className="flex gap-4 mb-6">
+        <a
+          href={`/dashboard/${event.id}/scanner`}
+          className="btn btn-secondary"
+        >
+          Go to Attendance Scanner
+        </a>
+        <EventShareLink link={`${process.env.NEXT_PUBLIC_BASE_URL || ''}/dashboard/${event.id}/scanner`} />
       </div>
       <div className="flex gap-4">
         <EventEditModal event={event} />
