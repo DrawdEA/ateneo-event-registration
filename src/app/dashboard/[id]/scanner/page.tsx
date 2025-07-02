@@ -3,7 +3,7 @@ import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import React from "react";
 import { EventAttendanceForm } from "@/components/event-attendance-form";
-import { LiveBarcodeScanner } from "@/components/barcode-scanner";
+import { ChromaKeyBarcodeScanner } from "@/components/chroma-key-barcode-scanner";
 
 interface ScannerPageProps {
   params: { id: string };
@@ -37,8 +37,8 @@ export default async function ScannerPage({ params }: ScannerPageProps) {
     <div className="p-8 max-w-2xl mx-auto text-center">
       <h1 className="text-3xl font-bold mb-2">Attendance Scanner</h1>
       <h2 className="text-xl text-gray-500 mb-8">{event.name}</h2>
-      {/* Live Barcode Scanner */}
-      <LiveBarcodeScanner eventId={event.id} />
+      {/* Chroma Key Barcode Scanner */}
+      <ChromaKeyBarcodeScanner eventId={event.id} />
       <div className="divider my-8">OR</div>
       {/* Manual Input Form */}
       <div className="max-w-md mx-auto">

@@ -21,7 +21,7 @@ export async function middleware(request: NextRequest) {
   const publicRoutes = ["/", "/login", "/register"];
   const isPublicRoute = publicRoutes.includes(pathname);
 
-  const isProtectedRoute = pathname.startsWith("/dashboard");
+  const isProtectedRoute = pathname.startsWith("/dashboardss");
 
   if (isLoggedIn && isPublicRoute) {
     return NextResponse.redirect(new URL("/dashboard", request.url));
